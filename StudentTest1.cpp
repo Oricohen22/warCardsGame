@@ -5,7 +5,7 @@
 #include "sources/card.hpp"
 using namespace std;
 using namespace ariel;
-/*
+
 TEST_CASE("The amount of cards before starting a game")
 {
     Player p1("Alice");
@@ -28,7 +28,7 @@ TEST_CASE("The amount of cards after starting a game")
     CHECK(p1.cardesTaken() == 0);
     CHECK(p2.cardesTaken() == 0);
 }
-*/
+
 TEST_CASE("The card scheme at the end of the game")
 {
     Player p1("Alice");
@@ -38,7 +38,7 @@ TEST_CASE("The card scheme at the end of the game")
     int sum = p1.stacksize() + p1.cardesTaken() + p2.stacksize() + p2.cardesTaken();
     CHECK(sum == 52);
 }
-/*
+
 TEST_CASE("Throwing errors from the functions")
 {
     Player p1("Alice");
@@ -98,4 +98,3 @@ TEST_CASE("The game ends after at most 26 turns")
     CHECK(p2.stacksize() == 0);
 }
 
-*/

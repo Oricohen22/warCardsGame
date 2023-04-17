@@ -14,7 +14,7 @@ using namespace std;
 
 namespace ariel
 {
-
+    int stay = 1;
     Game::Game(Player &p1, Player &p2)
     {
         this->p1 = &p1;
@@ -99,10 +99,9 @@ namespace ariel
             this->lastTurn = this->p2->getName() + " Won The Turn\n";
             this->gameLog += this->lastTurn + p2->getName() + "Won the Turn\n";
         }
-
         else
         {
-            while (c1.getValue() == c2.getValue())
+            while (c1.getValue() == c2.getValue() && stay)
             { // war situation
                 cout<<"~~~~~~~~~~~~~WAR~~~~~~~~~~~~~~~`"<<endl;
                 Draws++;
@@ -110,6 +109,8 @@ namespace ariel
                {
                 p1->getWoncards(drawCards);
                 p2->getWoncards(drawCards);
+                stay = 0;
+                break;
                }
                
 
