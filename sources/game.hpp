@@ -6,8 +6,8 @@ class Game
 {
 
 public:
-    Player *p1;
-    Player *p2;
+    Player *p1_;
+    Player *p2_;
     Player* winner;
     vector<Card>drawCards;
     int p1wins;

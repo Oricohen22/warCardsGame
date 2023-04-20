@@ -15,18 +15,18 @@ using namespace std;
 namespace ariel
 {
     int stay = 1;
-    Game::Game(Player &p1, Player &p2)
+    Game::Game(Player &p1_, Player &p2_)
     {
-        this->p1 = &p1;
-        this->p2 = &p2;
+        this->p1_ = &p1_;
+        this->p2_ = &p2_;
         this->Draws = 0;
         (this)->winner = nullptr;
-        if (p1.getisPlaying() == true || p2.getisPlaying() == true)
+        if (p1_.getisPlaying() == true || p2_.getisPlaying() == true)
         {
             throw std::invalid_argument("Player(s) already in game and playing");
         }
-        p1.setisPlaying(true);
-        p2.setisPlaying(true);
+        p1_.setisPlaying(true);
+        p2_.setisPlaying(true);
         buildandeal();
     }
 
@@ -53,10 +53,10 @@ namespace ariel
         // deal the cards to the players
         for (int i = 0; i < 26; i++)
         {
-            (this)->p1->addCards((this)->cards.back());
+            (this)->p1_->addCards((this)->cards.back());
             (this)->cards.pop_back();
 
-            (this)->p2->addCards((this)->cards.back());
+            (this)->p2_->addCards((this)->cards.back());
             (this)->cards.pop_back();
         }
     }
@@ -64,86 +64,86 @@ namespace ariel
     void Game::playTurn()
     {
 
-        if (this->p1->stacksize() == 0)
+        if (this->p1_->stacksize() == 0)
         {
             throw runtime_error("the game is Over!");
         }
-        if (p1->getName() == p2->getName())
+        if (p1_->getName() == p2_->getName())
         {
             throw runtime_error("there is only one player");
         }
-        Card c1 = this->p1->popCard();
-        Card c2 = this->p2->popCard();
-            drawCards.push_back(c1);
-        drawCards.push_back(c2);
-        string log = p1->getName() + " played " + c1.toStringsuit() + c1.toStringNumber();
-        log += " " + p2->getName() + " played " + c2.toStringsuit() + c2.toStringNumber() + ".";
+        Card c1_= this->p1_->popCard();
+        Card c2_ = this->p2_->popCard();
+            drawCards.push_back(c1_);
+        drawCards.push_back(c2_);
+        string log = p1_->getName() + " played " + c1_.toStringsuit() + c1_.toStringNumber();
+        log += " " + p2_->getName() + " played " + c2_.toStringsuit() + c2_.toStringNumber() + ".";
 
-        if ((c1.getValue() == 2 && c2.getValue() == 1) || (c1.getValue() > c2.getValue()))
+        if ((c1_.getValue() == 2 && c2_.getValue() == 1) || (c1_.getValue() > c2_.getValue()))
         {
             p1wins++;
-            p1->getWoncards(drawCards);
-            p1->addCardsTaken();
-            p1->addCardsTaken();
-            this->winner = p1;
-            this->lastTurn = this->p1->getName() + " Won The Turn\n";
-            this->gameLog += this->lastTurn + p2->getName() + "Won the Turn\n";
+            p1_->getWoncards(drawCards);
+            p1_->addCardsTaken();
+            p1_->addCardsTaken();
+            this->winner = p1_;
+            this->lastTurn = this->p1_->getName() + " Won The Turn\n";
+            this->gameLog += this->lastTurn + p2_->getName() + "Won the Turn\n";
         }
-        else if ((c2.getValue() == 1 && c1.getValue() == 2) || (c2.getValue() > c1.getValue()))
+        else if ((c2_.getValue() == 1 && c1_.getValue() == 2) || (c2_.getValue() > c1_.getValue()))
         {
             p2wins++;
-            p2->getWoncards(drawCards);
-            p2->addCardsTaken();
-            p2->addCardsTaken();
-            this->winner = p2;
-            this->lastTurn = this->p2->getName() + " Won The Turn\n";
-            this->gameLog += this->lastTurn + p2->getName() + "Won the Turn\n";
+            p2_->getWoncards(drawCards);
+            p2_->addCardsTaken();
+            p2_->addCardsTaken();
+            this->winner = p2_;
+            this->lastTurn = this->p2_->getName() + " Won The Turn\n";
+            this->gameLog += this->lastTurn + p2_->getName() + "Won the Turn\n";
         }
         else
         {
-            while (c1.getValue() == c2.getValue() && stay)
+            while (c1_.getValue() == c2_.getValue() && stay)
             { // war situation
                 cout<<"~~~~~~~~~~~~~WAR~~~~~~~~~~~~~~~`"<<endl;
                 Draws++;
-               if (p1->stacksize() < 2)
+               if (p1_->stacksize() < 2)
                {
-                p1->getWoncards(drawCards);
-                p2->getWoncards(drawCards);
+                p1_->getWoncards(drawCards);
+                p2_->getWoncards(drawCards);
                 stay = 0;
                 break;
                }
                
 
-                else if (p1->stacksize() > 1)
+                else if (p1_->stacksize() > 1)
                 {
-                    drawCards.push_back(p1->popCard());
-                    drawCards.push_back(p2->popCard());
+                    drawCards.push_back(p1_->popCard());
+                    drawCards.push_back(p2_->popCard());
 
-                    c1 = p1->popCard();
-                    c2 = p2->popCard();
-                    drawCards.push_back(c1);
-                    drawCards.push_back(c2);
+                    c1_ = p1_->popCard();
+                    c2_ = p2_->popCard();
+                    drawCards.push_back(c1_);
+                    drawCards.push_back(c2_);
                 }
             }
-            if ((c1.getValue() == 2 && c2.getValue() == 1) || (c1.getValue() > c2.getValue()))
+            if ((c1_.getValue() == 2 && c2_.getValue() == 1) || (c1_.getValue() > c2_.getValue()))
             {
                 p1wins++;
                 int counter = drawCards.size();
-                p1->getWoncards(drawCards);
-                p1->addMultiCardsTaken(counter);
-                this->winner = p1;
-                this->lastTurn = this->p1->getName() + " Won The Turn\n";
-                this->gameLog += this->lastTurn + p2->getName() + "Won the Turn\n";
+                p1_->getWoncards(drawCards);
+                p1_->addMultiCardsTaken(counter);
+                this->winner = p1_;
+                this->lastTurn = this->p1_->getName() + " Won The Turn\n";
+                this->gameLog += this->lastTurn + p2_->getName() + "Won the Turn\n";
             }
-            else if ((c2.getValue() == 1 && c1.getValue() == 2) || (c2.getValue() > c1.getValue()))
+            else if ((c2_.getValue() == 1 && c1_.getValue() == 2) || (c2_.getValue() > c1_.getValue()))
             {
                 p2wins++;
                 int counter = drawCards.size();
-                p2->getWoncards(drawCards);
-                p2->addMultiCardsTaken(counter);
-                this->winner = p2;
-                this->lastTurn = this->p2->getName() + " Won The Turn\n";
-                this->gameLog += this->lastTurn + p2->getName() + "Won the Turn\n";
+                p2_->getWoncards(drawCards);
+                p2_->addMultiCardsTaken(counter);
+                this->winner = p2_;
+                this->lastTurn = this->p2_->getName() + " Won The Turn\n";
+                this->gameLog += this->lastTurn + p2_->getName() + "Won the Turn\n";
             }
         }
     }
@@ -167,7 +167,7 @@ Player *Game::getWinner()
 
 void Game::playAll()
 {
-    while (0 < this->p1->stacksize())
+    while (0 < this->p1_->stacksize())
     {
         playTurn();
     }
@@ -188,15 +188,15 @@ string Game::printLog()
 void Game::printStats()
 {
     cout << "\n"
-         << p1->getName() << ":\n"
+         << p1_->getName() << ":\n"
          << "win rate: " << ((double)p1wins / (p1wins + p2wins) * 100) << "%\n"
-         << "cards won: " << p1->cardesTaken()
+         << "cards won: " << p1_->cardesTaken()
          << endl;
 
     cout << "\n"
-         << p2->getName() << ":\n"
+         << p2_->getName() << ":\n"
          << "win rate: " << ((double)p2wins / (p1wins + p2wins) * 100) << "%\n"
-         << "cards won: " << p2->cardesTaken()
+         << "cards won: " << p2_->cardesTaken()
          << endl;
 
     cout << "\ndraw rate: " << ((double)Draws / (p1wins + p2wins)) * 100 << "%\n"

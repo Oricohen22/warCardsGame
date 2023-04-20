@@ -3,6 +3,7 @@
 #include <string>
 #include "card.hpp"
 using namespace std;
+//player class
 
 namespace ariel{
 class Player
